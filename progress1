@@ -1,0 +1,127 @@
+ggplot(average_runtime_per_year, aes(x = as.factor(startYear), y = runtimeMinutes, fill = as.factor(startYear))) +
+  geom_col() +
+  labs(title = "Tendance de la durée moyenne des films par année",
+       x = "Année",
+       y = "Durée moyenne du film (minutes)",
+       fill = "Année") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+average_runtime_per_year <- aggregate(runtimeMinutes ~ startYear, data = data_clean, FUN = mean)
+local({fn<-choose.files(filters=Filters[c('R','txt','All'),],index=4)
+file.show(fn,header=fn,title='')})
+install.packages("tidyverse")
+data <- read.delim("path/to/title.basics.tsv.gz", header = TRUE, quote = "", sep = "\t", na.strings = "\\N", stringsAsFactors = FALSE, compression = "gzip")
+data <- read.delim("path/to/title.basics.tsv.gz", header = TRUE, quote = "", sep = "\t", na.strings = "\\N", stringsAsFactors = FALSE, compression = "gzip")
+install.packages("readr")
+library(readr)
+data <- read_tsv("C:/Users/Skymil/Desktop/R", na = "\\N", col_types = cols(), locale = locale(encoding = "UTF-8"))
+data <- read_tsv("C:/Users/Skymil/Desktop/R/title.basics.tsv.gz", na = "\\N", col_types = cols(), locale = locale(encoding = "UTF-8"))
+head(data_clean)
+head(data)
+install.packages("dplyr")
+library(dplyr)
+data_clean <- data %>% 
+  mutate(endYear = ifelse(is.na(endYear), "-", endYear),
+         runtimeMinutes = ifelse(is.na(runtimeMinutes), "-", runtimeMinutes))
+data_clean <- distinct(data_clean)
+data_clean <- data_clean %>% 
+  mutate(genres = gsub("[[:punct:]]", "", genres),
+         genres = ifelse(genres == "", "-", genres))
+films_per_year <- data_clean %>%
+  group_by(startYear) %>%
+  summarise(number_of_films = n()) %>%
+  arrange(startYear)
+install.packages("ggplot2")
+ggplot(films_per_year, aes(x = startYear, y = number_of_films)) +
+  geom_line(color = "blue") +
+  geom_point(color = "blue") +
+  labs(title = "Nombre de films par année",
+       x = "Année",
+       y = "Nombre de films") +
+  theme_minimal()
+library(ggplot2)
+ggplot(films_per_year, aes(x = startYear, y = number_of_films)) +
+  geom_line(color = "blue") +
+  geom_point(color = "blue") +
+  labs(title = "Nombre de films par année",
+       x = "Année",
+       y = "Nombre de films") +
+  theme_minimal()
+ggplot(films_per_year, aes(x = startYear, y = number_of_films)) +
+  geom_bar(stat = "identity", fill = "skyblue", width = 0.7) +
+  labs(title = "Évolution du nombre de films par année",
+       x = "Année",
+       y = "Nombre de films",
+       caption = "Source: IMDb") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+q()
+q()
+q()
+file.remove(".RData")
+data <- read.csv("C:/Users/Skymil/Desktop/R/tunisia/API_TUN_DS2_en_csv_v2_3590.csv")
+install.packages("readr")
+library(readr)
+data <- read_csv("C:/Users/Skymil/Desktop/R/tunisia/API_TUN_DS2_en_csv_v2_3590.csv")
+file.exists("C:/Users/Skymil/Desktop/R/tunisia/API_TUN_DS2_en_csv_v2_3590.csv")
+data <- read_csv("C:/Users/Skymil/Desktop/R/tunisia/API_TUN_DS2_en_csv_v2_3590.csv")
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv")
+head(data)
+problems(data)
+library(readr)
+library(readr)
+# Attempt to read the CSV file again with correct delimiter
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv", 
+                 skip = 2, # Skip the first 2 rows
+                 col_names = FALSE) # Do not use the first row as column names
+problems(data)
+library(readr)
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv", delim = ",", skip = 1)
+library(readr)
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1)
+problems(data)
+head(data)
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1)
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1, stringsAsFactors = FALSE)
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1, header = FALSE, stringsAsFactors = FALSE)
+colnames(data)
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1, stringsAsFactors = FALSE, header = TRUE)
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 2, stringsAsFactors = FALSE, header = TRUE)
+q()
+q()
+clear
+delete(data)
+file.remove(".RData")
+data <- read.csv("C:/Users/Skymil/Desktop/P/data/data.csv")
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv")
+colnames(data)
+data <- na.omit(data)
+data <- unique(data)
+numeric_columns <- c("Population", "Per.capita.GNI", "Changes.in.inventories", "Exports.of.goods.and.services",
+                     "Final.consumption.expenditure", "General.government.final.consumption.expenditure",
+                     "Gross.capital.formation", "Gross.fixed.capital.formation..including.Acquisitions.less.disposals.of.valuables.",
+                     "Household.consumption.expenditure..including.Non.profit.institutions.serving.households.",
+                     "Imports.of.goods.and.services", "Manufacturing..ISIC.D.", "Total.Value.Added",
+                     "Gross.National.Income.GNI..in.USD", "Gross.Domestic.Product..GDP.")
+for (col in numeric_columns) {
+  data[[col]] <- as.numeric(data[[col]])
+}
+str(data)
+colnames(data) <- c("CountryID", "Country", "Year", "AMA_exchange_rate", "IMF_based_exchange_rate", 
+                    "Population", "Currency", "Per_capita_GNI", "Agriculture", "Changes_in_inventories",
+                    "Construction", "Exports_of_goods_and_services", "Final_consumption_expenditure",
+                    "General_government_final_consumption_expenditure", "Gross_capital_formation",
+                    "Gross_fixed_capital_formation", "Household_consumption_expenditure",
+                    "Imports_of_goods_and_services", "Manufacturing", "Mining_Manufacturing_Utilities",
+                    "Other_Activities", "Total_Value_Added", "Transport_storage_communication",
+                    "Wholesale_retail_trade_hotels", "Gross_National_Income_GNI_in_USD", "Gross_Domestic_Product_GDP")
+colnames(data)
+library(ggplot2)
+data_filtered <- data[data$Country == "Tunisia", ]
+ggplot(data_filtered, aes(x = Year, y = Gross_Domestic_Product_GDP)) +
+  geom_line(color = "blue") +   # Adding a line to represent the GDP trend
+  labs(title = "GDP Trend in Tunisia",       # Graph title
+       x = "Year",                  # X-axis label
+       y = "GDP (in USD)") +        # Y-axis label
+  theme_minimal() 

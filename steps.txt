@@ -1,0 +1,119 @@
+
+1) downloading ..
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv")
+2) cleaning
+	1-Handling Missing Values
+		data <- na.omit(data)
+	2-Removing Duplicates
+		data <- unique(data)
+	3-Correcting Data Types
+		numeric_columns <- c("Population", "Per.capita.GNI", "Changes.in.inventories", 					"Exports.of.goods.and.services",
+                     "Final.consumption.expenditure", "General.government.final.consumption.expenditure",
+                     "Gross.capital.formation", 							 	"Gross.fixed.capital.formation..including.Acquisitions.less.disposals.of.valuables.",
+                     "Household.consumption.expenditure..including.Non.profit.institutions.serving.households.",
+                     "Imports.of.goods.and.services", "Manufacturing..ISIC.D.", "Total.Value.Added",
+                     "Gross.National.Income.GNI..in.USD", "Gross.Domestic.Product..GDP.")
+	for (col in numeric_columns) {
+  		data[[col]] <- as.numeric(data[[col]])
+		}
+	4-Renaming Columns
+		colnames(data) <- c("CountryID", "Country", "Year", "AMA_exchange_rate", "IMF_based_exchange_rate", 
+                    "Population", "Currency", "Per_capita_GNI", "Agriculture", "Changes_in_inventories",
+                    "Construction", "Exports_of_goods_and_services", "Final_consumption_expenditure",
+                    "General_government_final_consumption_expenditure", "Gross_capital_formation",
+                    "Gross_fixed_capital_formation", "Household_consumption_expenditure",
+                    "Imports_of_goods_and_services", "Manufacturing", "Mining_Manufacturing_Utilities",
+                    "Other_Activities", "Total_Value_Added", "Transport_storage_communication",
+                    "Wholesale_retail_trade_hotels", "Gross_National_Income_GNI_in_USD", 			"Gross_Domestic_Product_GDP")
+
+
+analysing
+ 1-top 5 counrties by gdp in 2020
+# Load the necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Filter data for a specific year, e.g., 2020
+data_2020 <- data[data$Year == 2020,]
+
+# Select top 5 countries with highest GDP
+top_countries <- data_2020 %>%
+  arrange(desc(Gross_Domestic_Product_GDP)) %>%
+  head(5)
+
+# Create a bar plot
+ggplot(top_countries, aes(x=reorder(Country, -Gross_Domestic_Product_GDP), y=Gross_Domestic_Product_GDP)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  coord_flip() +
+  labs(title="Top 5 Countries by GDP in 2020",
+       x="Country",
+       y="Gross Domestic Product (GDP)") +
+  theme_minimal()
+2-country by population
+	# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+
+# Create interactive bar chart with plotly
+plot_ly(data = data, x = ~Country, y = ~Population, type = 'bar') %>%
+  layout(title = "Population by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Population"))
+3-agricutlture by population
+# Create interactive bar chart for Agriculture
+plot_ly(data = data, x = ~Country, y = ~Agriculture, type = 'bar') %>%
+  layout(title = "Agriculture by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Value"))
+4-country by inventories by country 
+	# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+
+# Create box plot for Changes_in_inventories by Country
+plot_ly(data = data, x = ~Country, y = ~Changes_in_inventories, type = 'box') %>%
+  layout(title = "Changes in Inventories by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Changes in Inventories"))
+
+5-total value added by country
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+
+# Create interactive bar chart for Total_Value_Added by Country
+plot_ly(data = data, x = ~Country, y = ~Total_Value_Added, type = 'bar') %>%
+  layout(title = "Total Value Added by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Total Value Added"))
+6-analyse de charts
+7-prediction 
+	install.packages(c("lmtest", "ggplot2"))
+	1)créer un modèle de régression linéaire simple pour prédire "Total_Value_Added" en fonction de 	"Population"
+	# Créer un modèle de régression linéaire simple
+	model_population <- lm(Total_Value_Added ~ Population, data = data)
+
+	# Afficher un résumé du modèle
+	summary(model_population)
+
+	2) tracage de modele
+La ligne de régression représente la tendance générale des données, et vous pouvez voir comment "Total_Value_Added" varie avec "Population".
+
+# Tracer le nuage de points avec la ligne de régression ajustée
+ggplot(data, aes(x = Population, y = Total_Value_Added)) +
+  geom_point() +  # Ajouter les points
+  geom_smooth(method = "lm", color = "blue") +  # Ajouter la ligne de régression
+  labs(title = "Régression linéaire de Total_Value_Added en fonction de Population",
+       x = "Population",
+       y = "Total_Value_Added")
+
+
+
+
+
+
+
+
+
+
+

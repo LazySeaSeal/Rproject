@@ -1,0 +1,473 @@
+ggplot(average_runtime_per_year, aes(x = as.factor(startYear), y = runtimeMinutes, fill = as.factor(startYear))) +
+  geom_col() +
+  labs(title = "Tendance de la durée moyenne des films par année",
+       x = "Année",
+       y = "Durée moyenne du film (minutes)",
+       fill = "Année") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+average_runtime_per_year <- aggregate(runtimeMinutes ~ startYear, data = data_clean, FUN = mean)
+local({fn<-choose.files(filters=Filters[c('R','txt','All'),],index=4)
+file.show(fn,header=fn,title='')})
+install.packages("tidyverse")
+data <- read.delim("path/to/title.basics.tsv.gz", header = TRUE, quote = "", sep = "\t", na.strings = "\\N", stringsAsFactors = FALSE, compression = "gzip")
+data <- read.delim("path/to/title.basics.tsv.gz", header = TRUE, quote = "", sep = "\t", na.strings = "\\N", stringsAsFactors = FALSE, compression = "gzip")
+install.packages("readr")
+library(readr)
+data <- read_tsv("C:/Users/Skymil/Desktop/R", na = "\\N", col_types = cols(), locale = locale(encoding = "UTF-8"))
+data <- read_tsv("C:/Users/Skymil/Desktop/R/title.basics.tsv.gz", na = "\\N", col_types = cols(), locale = locale(encoding = "UTF-8"))
+head(data_clean)
+head(data)
+install.packages("dplyr")
+library(dplyr)
+data_clean <- data %>% 
+  mutate(endYear = ifelse(is.na(endYear), "-", endYear),
+         runtimeMinutes = ifelse(is.na(runtimeMinutes), "-", runtimeMinutes))
+data_clean <- distinct(data_clean)
+data_clean <- data_clean %>% 
+  mutate(genres = gsub("[[:punct:]]", "", genres),
+         genres = ifelse(genres == "", "-", genres))
+films_per_year <- data_clean %>%
+  group_by(startYear) %>%
+  summarise(number_of_films = n()) %>%
+  arrange(startYear)
+install.packages("ggplot2")
+ggplot(films_per_year, aes(x = startYear, y = number_of_films)) +
+  geom_line(color = "blue") +
+  geom_point(color = "blue") +
+  labs(title = "Nombre de films par année",
+       x = "Année",
+       y = "Nombre de films") +
+  theme_minimal()
+library(ggplot2)
+ggplot(films_per_year, aes(x = startYear, y = number_of_films)) +
+  geom_line(color = "blue") +
+  geom_point(color = "blue") +
+  labs(title = "Nombre de films par année",
+       x = "Année",
+       y = "Nombre de films") +
+  theme_minimal()
+ggplot(films_per_year, aes(x = startYear, y = number_of_films)) +
+  geom_bar(stat = "identity", fill = "skyblue", width = 0.7) +
+  labs(title = "Évolution du nombre de films par année",
+       x = "Année",
+       y = "Nombre de films",
+       caption = "Source: IMDb") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+q()
+q()
+q()
+file.remove(".RData")
+data <- read.csv("C:/Users/Skymil/Desktop/R/tunisia/API_TUN_DS2_en_csv_v2_3590.csv")
+install.packages("readr")
+library(readr)
+data <- read_csv("C:/Users/Skymil/Desktop/R/tunisia/API_TUN_DS2_en_csv_v2_3590.csv")
+file.exists("C:/Users/Skymil/Desktop/R/tunisia/API_TUN_DS2_en_csv_v2_3590.csv")
+data <- read_csv("C:/Users/Skymil/Desktop/R/tunisia/API_TUN_DS2_en_csv_v2_3590.csv")
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv")
+head(data)
+problems(data)
+library(readr)
+library(readr)
+# Attempt to read the CSV file again with correct delimiter
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv", 
+                 skip = 2, # Skip the first 2 rows
+                 col_names = FALSE) # Do not use the first row as column names
+problems(data)
+library(readr)
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv", delim = ",", skip = 1)
+library(readr)
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1)
+problems(data)
+head(data)
+data <- read_csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1)
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1, stringsAsFactors = FALSE)
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1, header = FALSE, stringsAsFactors = FALSE)
+colnames(data)
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 1, stringsAsFactors = FALSE, header = TRUE)
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv", skip = 2, stringsAsFactors = FALSE, header = TRUE)
+q()
+q()
+clear
+delete(data)
+file.remove(".RData")
+data <- read.csv("C:/Users/Skymil/Desktop/P/data/data.csv")
+data <- read.csv("C:/Users/Skymil/Desktop/P/data.csv")
+colnames(data)
+data <- na.omit(data)
+data <- unique(data)
+numeric_columns <- c("Population", "Per.capita.GNI", "Changes.in.inventories", "Exports.of.goods.and.services",
+                     "Final.consumption.expenditure", "General.government.final.consumption.expenditure",
+                     "Gross.capital.formation", "Gross.fixed.capital.formation..including.Acquisitions.less.disposals.of.valuables.",
+                     "Household.consumption.expenditure..including.Non.profit.institutions.serving.households.",
+                     "Imports.of.goods.and.services", "Manufacturing..ISIC.D.", "Total.Value.Added",
+                     "Gross.National.Income.GNI..in.USD", "Gross.Domestic.Product..GDP.")
+for (col in numeric_columns) {
+  data[[col]] <- as.numeric(data[[col]])
+}
+str(data)
+colnames(data) <- c("CountryID", "Country", "Year", "AMA_exchange_rate", "IMF_based_exchange_rate", 
+                    "Population", "Currency", "Per_capita_GNI", "Agriculture", "Changes_in_inventories",
+                    "Construction", "Exports_of_goods_and_services", "Final_consumption_expenditure",
+                    "General_government_final_consumption_expenditure", "Gross_capital_formation",
+                    "Gross_fixed_capital_formation", "Household_consumption_expenditure",
+                    "Imports_of_goods_and_services", "Manufacturing", "Mining_Manufacturing_Utilities",
+                    "Other_Activities", "Total_Value_Added", "Transport_storage_communication",
+                    "Wholesale_retail_trade_hotels", "Gross_National_Income_GNI_in_USD", "Gross_Domestic_Product_GDP")
+colnames(data)
+library(ggplot2)
+data_filtered <- data[data$Country == "Tunisia", ]
+ggplot(data_filtered, aes(x = Year, y = Gross_Domestic_Product_GDP)) +
+  geom_line(color = "blue") +   # Adding a line to represent the GDP trend
+  labs(title = "GDP Trend in Tunisia",       # Graph title
+       x = "Year",                  # X-axis label
+       y = "GDP (in USD)") +        # Y-axis label
+  theme_minimal() 
+# Check unique country names in the dataset
+unique_countries <- unique(data$Country)
+print(unique_countries)
+# Check data for Tunisia
+data_tunisia <- data[data$Country == "Tunisia", ]
+print(head(data_tunisia))
+# Check for missing values in the Gross_Domestic_Product_GDP column for Tunisia
+missing_values <- sum(is.na(data_tunisia$Gross_Domestic_Product_GDP))
+print(paste("Number of missing values for GDP in Tunisia:", missing_values))
+# Check data for Tunisia
+data_tunisia <- data[data$Country == "Tunisia", ]
+print(head(data_tunisia))
+# Loading the ggplot2 package
+library(ggplot2)
+# Creating the line chart for GDP trends
+ggplot(data, aes(x = Year, y = Gross_Domestic_Product_GDP, color = Country)) +
+  geom_line() +
+  labs(title = "GDP Trends by Country", 
+       x = "Year", 
+       y = "GDP (in USD)") +
+  theme_minimal() +
+  theme(legend.position = "right")
+colnames(data)
+# Load the necessary library
+library(ggplot2)
+# Create a scatter plot
+ggplot(data, aes(x=Gross_National_Income_GNI_in_USD, y=Gross_Domestic_Product_GDP)) +
+  geom_point() +
+  facet_wrap(~Country) +
+  labs(title="Relationship between GNI and GDP",
+       x="Gross National Income (GNI) in USD",
+       y="Gross Domestic Product (GDP)") +
+  theme_minimal()
+# Load the necessary library
+library(ggplot2)
+# Filter data for a specific year, e.g., 2020
+data_2020 <- data[data$Year == 2020,]
+# Create a bar plot
+ggplot(data_2020, aes(x=reorder(Country, -Gross_Domestic_Product_GDP), y=Gross_Domestic_Product_GDP)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  coord_flip() +
+  labs(title="GDP of Different Countries in 2020",
+       x="Country",
+       y="Gross Domestic Product (GDP)") +
+  theme_minimal()
+# Load the necessary library
+library(ggplot2)
+# Filter data for a specific year, e.g., 2020
+data_2020 <- data[data$Year == 2020,]
+# Create a bar plot
+ggplot(data_2020, aes(x=reorder(as.factor(CountryID), -Gross_Domestic_Product_GDP), y=Gross_Domestic_Product_GDP)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  coord_flip() +
+  labs(title="GDP of Different Countries in 2020",
+       x="Country ID",
+       y="Gross Domestic Product (GDP)") +
+  theme_minimal()
+# Load the necessary library
+library(ggplot2)
+# Filter data for a specific year, e.g., 2020
+data_2020 <- data[data$Year == 2020,]
+# Create a bar plot
+ggplot(data_2020, aes(x=reorder(as.factor(CountryID), -Gross_Domestic_Product_GDP), y=Gross_Domestic_Product_GDP)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  coord_flip() +
+  labs(title="GDP of Different Countries in 2020",
+       x="Country ID",
+       y="Gross Domestic Product (GDP)") +
+  theme_minimal()
+install.packages("plotly")
+# Load the necessary libraries
+library(plotly)
+library(dplyr)
+# Filter data for a specific year, e.g., 2020
+data_2020 <- data[data$Year == 2020,]
+# Select top 10 countries with highest GDP
+top_countries <- data_2020 %>%
+  arrange(desc(Gross_Domestic_Product_GDP)) %>%
+  head(10)
+# Create an interactive scatter plot
+plot_ly(top_countries, x = ~as.factor(CountryID), y = ~Gross_Domestic_Product_GDP, type = "scatter", mode = "markers") %>%
+  layout(title = "Top 10 Countries by GDP in 2020",
+         xaxis = list(title = "Country ID"),
+         yaxis = list(title = "Gross Domestic Product (GDP)"))
+# Load the necessary libraries
+library(ggplot2)
+library(dplyr)
+# Filter data for a specific year, e.g., 2020
+data_2020 <- data[data$Year == 2020,]
+# Select top 5 countries with highest GDP
+top_countries <- data_2020 %>%
+  arrange(desc(Gross_Domestic_Product_GDP)) %>%
+  head(5)
+# Create a bar plot
+ggplot(top_countries, aes(x=reorder(Country, -Gross_Domestic_Product_GDP), y=Gross_Domestic_Product_GDP)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  coord_flip() +
+  labs(title="Top 5 Countries by GDP in 2020",
+       x="Country",
+       y="Gross Domestic Product (GDP)") +
+  theme_minimal()
+# Load the necessary libraries
+library(ggplot2)
+library(dplyr)
+# Filter data for a specific year, e.g., 2020
+data_2020 <- data[data$Year == 2020,]
+# Select top 5 countries with highest GDP
+top_countries <- data_2020 %>%
+  arrange(desc(Gross_Domestic_Product_GDP)) %>%
+  head(5)
+# Create a bar plot
+ggplot(top_countries, aes(x=reorder(Country, -Gross_Domestic_Product_GDP), y=Gross_Domestic_Product_GDP)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  coord_flip() +
+  labs(title="Top 5 Countries by GDP in 2020",
+       x="Country",
+       y="Gross Domestic Product (GDP)") +
+  theme_minimal()
+# Load the necessary library
+library(ggplot2)
+# Filter data for Tunisia
+data_tunisia <- data[data$Country == "Tunisia",]
+# Create a line plot
+ggplot(data_tunisia, aes(x=Year, y=Gross_Domestic_Product_GDP)) +
+  geom_line(color="steelblue") +
+  labs(title="Trend of GDP in Tunisia Over the Years",
+       x="Year",
+       y="Gross Domestic Product (GDP)") +
+  theme_minimal()
+colnames(data)
+# Install and load necessary packages
+install.packages("plotly")
+library(plotly)
+# Interactive Time series plot for a specific country
+country_data <- subset(data, Country == "YourCountry")  # Replace "YourCountry" with the country of interest
+plot_ly(country_data, x = ~Year, y = ~AMA_exchange_rate, color = ~Country, type = 'scatter', mode = 'lines') %>%
+  add_trace(y = ~IMF_based_exchange_rate, name = "IMF Based Exchange Rate") %>%
+  layout(title = "Interactive Time Series of Exchange Rates",
+         xaxis = list(title = "Year"),
+         yaxis = list(title = "Exchange Rate"),
+         hovermode = "closest")
+# Calculate top 10 countries by Per_capita_GNI
+top10_countries <- data[order(-data$Per_capita_GNI), ][1:10, ]
+# Interactive Bar chart
+plot_ly(top10_countries, x = ~reorder(Country, -Per_capita_GNI), y = ~Per_capita_GNI, type = 'bar') %>%
+  layout(title = "Top 10 Countries by Per Capita GNI",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Per Capita GNI"))
+# Calculate the correlation matrix
+correlation_matrix <- cor(correlation_data, use = "complete.obs")
+# Convert the correlation matrix to long format for plotting
+correlation_long <- reshape2::melt(correlation_matrix)
+# Interactive Heatmap using plotly
+plot_ly(correlation_long, x = ~Var1, y = ~Var2, z = ~value, type = "heatmap") %>%
+  layout(title = "Correlation Heatmap",
+         xaxis = list(title = ""),
+         yaxis = list(title = ""),
+         annotations = list(text = round(correlation_matrix, 2), showarrow = FALSE))
+# Filter data for a specific country
+country_data <- subset(data, Country == "YourCountry")  # Replace "YourCountry" with the country of interest
+# Line plot for AMA exchange rate over years
+ggplot(country_data, aes(x = Year, y = AMA_exchange_rate)) +
+  geom_line() +
+  ggtitle("AMA Exchange Rate Over Years for YourCountry") +
+  xlab("Year") +
+  ylab("AMA Exchange Rate")
+# Scatter plot of Population vs. Per Capita GNI
+ggplot(data, aes(x = Population, y = Per_capita_GNI)) +
+  geom_point() +
+  ggtitle("Scatter Plot of Population vs. Per Capita GNI") +
+  xlab("Population") +
+  ylab("Per Capita GNI")
+colnames(data)
+library(ggplot2)
+# Calculate top 10 countries by Population
+top10_countries <- data[order(-data$Population), ][1:10, ]
+# Create bar chart
+ggplot(top10_countries, aes(x = reorder(Country, -Population), y = Population)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Top 10 Countries by Population") +
+  xlab("Country") +
+  ylab("Population")
+library(ggplot2)
+# Calculate top 10 countries by Population
+top10_countries <- data[order(-data$Population), ][1:10, ]
+# Create bar chart
+ggplot(top10_countries, aes(x = reorder(Country, -Population), y = Population)) +
+  geom_col() +
+  ggtitle("Top 10 Countries by Population") +
+  xlab("Country") +
+  ylab("Population")
+library(ggplot2)
+# Manually specify the order of top 10 countries by Population
+top10_countries <- data[order(-data$Population), ][1:10, ]
+top10_countries$Country <- factor(top10_countries$Country, levels = top10_countries$Country)
+# Create bar chart
+ggplot(top10_countries, aes(x = Country, y = Population)) +
+  geom_col() +
+  ggtitle("Top 10 Countries by Population") +
+  xlab("Country") +
+  ylab("Population")
+library(ggplot2)
+# Calculate top 10 countries by Population
+top10_countries <- data[order(-data$Population), ][1:10, ]
+# Create bar chart
+ggplot(top10_countries, aes(x = Country, y = Population)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Top 10 Countries by Population") +
+  xlab("Country") +
+  ylab("Population") +
+  scale_x_discrete(limits = top10_countries$Country)
+library(plotly)
+top10_countries <- data[order(-data$Population), ][1:10, ]
+# Create interactive bar chart with plotly
+plot_ly(top10_countries, x = ~Country, y = ~Population, type = 'bar') %>%
+  layout(title = "Top 10 Countries by Population",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Population"))
+top10_countries <- data[order(-data$Population), ][1:10, ]
+# Create interactive bar chart with plotly
+plot_ly(top10_countries, x = ~reorder(Country, -Population), y = ~Population, type = 'bar') %>%
+  layout(title = "Top 10 Countries by Population",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Population"))
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Calculate top 10 countries by Population
+top10_countries <- data[order(-data$Population), ][1:10, ]
+# Create interactive bar chart with plotly
+plot_ly(data = top10_countries, x = ~Country, y = ~Population, type = 'bar') %>%
+  layout(title = "Top 10 Countries by Population",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Population"))
+# Check top 10 countries by Population
+top10_countries <- data[order(-data$Population), ][1:10, ]
+print(top10_countries)
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Create data frame for plot
+plot_data <- data.frame(Country = top10_countries$Country, Population = top10_countries$Population)
+# Create interactive bar chart with plotly
+plot_ly(data = plot_data, x = ~Country, y = ~Population, type = 'bar') %>%
+  layout(title = "Top 10 Countries by Population",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Population"))
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Create interactive bar chart with plotly
+plot_ly(data = data, x = ~Country, y = ~Population, type = 'bar') %>%
+  layout(title = "Population by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Population"))
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Create interactive bar chart with plotly
+plot_ly(data = data, x = ~Country, y = ~Hunting, type = 'bar', name = 'Hunting') %>%
+  add_trace(y = ~Agriculture, type = 'bar', name = 'Agriculture') %>%
+  add_trace(y = ~Forestry, type = 'bar', name = 'Forestry') %>%
+  add_trace(y = ~Fishing, type = 'bar', name = 'Fishing') %>%
+  layout(title = "Economic Activities by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Value"))
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Create interactive bar chart for Hunting
+plot_ly(data = data, x = ~Country, y = ~Hunting, type = 'bar') %>%
+  layout(title = "Hunting by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Value"))
+colnames(data)
+# Create interactive bar chart for Agriculture
+plot_ly(data = data, x = ~Country, y = ~Agriculture, type = 'bar') %>%
+  layout(title = "Agriculture by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Value"))
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Create interactive bar chart for AMA_exchange_rate by Country
+plot_ly(data = data, x = ~Country, y = ~AMA_exchange_rate, type = 'bar') %>%
+  layout(title = "AMA Exchange Rate by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "AMA Exchange Rate"))
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Create scatter plot for Changes_in_inventories by Country
+plot_ly(data = data, x = ~Country, y = ~Changes_in_inventories, mode = 'markers') %>%
+  layout(title = "Changes in Inventories by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Changes in Inventories"))
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Create box plot for Changes_in_inventories by Country
+plot_ly(data = data, x = ~Country, y = ~Changes_in_inventories, type = 'box') %>%
+  layout(title = "Changes in Inventories by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Changes in Inventories"))
+# Install and load plotly package
+install.packages("plotly")
+library(plotly)
+# Create interactive bar chart for Total_Value_Added by Country
+plot_ly(data = data, x = ~Country, y = ~Total_Value_Added, type = 'bar') %>%
+  layout(title = "Total Value Added by Country",
+         xaxis = list(title = "Country"),
+         yaxis = list(title = "Total Value Added"))
+install.packages(c("lmtest", "ggplot2"))
+library(lmtest)
+library(ggplot2)
+# Créer un modèle de régression linéaire
+model <- lm(Total_Value_Added ~ Population + Changes_in_inventories, data = data)
+# Afficher un résumé du modèle
+summary(model)
+# Prédire "Total_Value_Added" pour de nouvelles données
+new_data <- data.frame(Population = c(1000000), Changes_in_inventories = c(50000))
+predicted <- predict(model, newdata = new_data)
+print(predicted)
+# Tracer le nuage de points avec la ligne de régression ajustée et les prédictions
+ggplot(data, aes(x = Population, y = Total_Value_Added)) +
+  geom_point() +  # Ajouter les points
+  geom_smooth(method = "lm", color = "blue") +  # Ajouter la ligne de régression
+  geom_point(data = new_data, aes(y = predicted), color = "red", size = 3) +  # Ajouter les prédictions
+  labs(title = "Régression linéaire de Total_Value_Added en fonction de Population avec prédictions",
+       x = "Population",
+       y = "Total_Value_Added")
+# Créer un modèle de régression linéaire simple
+model_population <- lm(Total_Value_Added ~ Population, data = data)
+# Afficher un résumé du modèle
+summary(model_population)
+# Tracer le nuage de points avec la ligne de régression ajustée
+ggplot(data, aes(x = Population, y = Total_Value_Added)) +
+  geom_point() +  # Ajouter les points
+  geom_smooth(method = "lm", color = "blue") +  # Ajouter la ligne de régression
+  labs(title = "Régression linéaire de Total_Value_Added en fonction de Population",
+       x = "Population",
+       y = "Total_Value_Added")
+# Plot the scatter plot with the fitted regression line
+plot(data$Population, data$Total_Value_Added, main = "Linear Regression of Total_Value_Added on Population",
+     xlab = "Population", ylab = "Total_Value_Added", col = "blue")
+abline(model_population, col = "red")
